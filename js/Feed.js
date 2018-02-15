@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require("react");
@@ -10,10 +14,6 @@ var _reactDom = require("react-dom");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _Resources = require("./Resources");
-
-var _Resources2 = _interopRequireDefault(_Resources);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22,34 +22,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/*this is the main view, through which all other views and components are renderd */
-var MainView = function (_React$Component) {
-    _inherits(MainView, _React$Component);
+var Feed = function (_React$Component) {
+    _inherits(Feed, _React$Component);
 
-    function MainView(props) {
-        _classCallCheck(this, MainView);
+    function Feed(props) {
+        _classCallCheck(this, Feed);
 
-        /* we should set the default here */
-        var _this = _possibleConstructorReturn(this, (MainView.__proto__ || Object.getPrototypeOf(MainView)).call(this, props));
-
-        _this.state = {
-            "location": "home"
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Feed.__proto__ || Object.getPrototypeOf(Feed)).call(this, props));
     }
 
-    _createClass(MainView, [{
+    _createClass(Feed, [{
         key: "render",
-        value: function render() {
-            switch (this.state.location) {
-                case "home":
-                    return _react2.default.createElement(_Resources2.default, null);
-                    break;
-            }
-        }
+        value: function render() {}
     }]);
 
-    return MainView;
+    return Feed;
 }(_react2.default.Component);
 
-_reactDom2.default.render(_react2.default.createElement(MainView, null), document.getElementById("main"));
+exports.default = Feed;
