@@ -77,14 +77,14 @@ var Chat = function (_React$Component) {
                 _react2.default.createElement(
                     "h3",
                     null,
-                    "Information Feed"
+                    "Chat"
                 ),
                 _react2.default.createElement(
                     "ul",
                     null,
                     chat
                 ),
-                _react2.default.createElement("input", { placeholder: "Write comment", onKeyPress: this.writeMessage.bind(this) })
+                _react2.default.createElement("input", { placeholder: "@" + this.state.user, onKeyPress: this.writeMessage.bind(this) })
             );
         }
     }]);

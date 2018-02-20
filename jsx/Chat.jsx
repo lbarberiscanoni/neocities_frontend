@@ -36,11 +36,11 @@ class Chat extends React.Component {
 
         return(
             <div>
-                <h3>Information Feed</h3>
+                <h3>Chat</h3>
                 <ul>
                     { chat }
                 </ul>
-                <input placeholder="Write comment" onKeyPress={ this.writeMessage.bind(this) }></input>
+                <input placeholder={ "@" + this.state.user } onKeyPress={ this.writeMessage.bind(this) }></input>
             </div>
         )
     }

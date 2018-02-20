@@ -18,6 +18,10 @@ var _Chat = require("./Chat");
 
 var _Chat2 = _interopRequireDefault(_Chat);
 
+var _Feed = require("./Feed");
+
+var _Feed2 = _interopRequireDefault(_Feed);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -51,7 +55,8 @@ var MainView = function (_React$Component) {
                         "div",
                         null,
                         _react2.default.createElement(_Resources2.default, null),
-                        _react2.default.createElement(_Chat2.default, null)
+                        _react2.default.createElement(_Chat2.default, null),
+                        _react2.default.createElement(_Feed2.default, null)
                     );
                     break;
             }
