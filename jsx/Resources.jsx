@@ -28,8 +28,12 @@ class Resources extends React.Component {
 
         return(
             <table>
-                <th>Resources</th>
-                { components } 
+                <thead>
+                    <h3>Resources</h3>
+                </thead>
+                <tbody>
+                    { components } 
+                </tbody>
             </table>
         )
     }

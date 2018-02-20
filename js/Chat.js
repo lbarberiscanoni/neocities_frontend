@@ -22,78 +22,74 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Resources = function (_React$Component) {
-    _inherits(Resources, _React$Component);
+var Chat = function (_React$Component) {
+    _inherits(Chat, _React$Component);
 
-    function Resources(props) {
-        _classCallCheck(this, Resources);
+    function Chat(props) {
+        _classCallCheck(this, Chat);
 
-        var _this = _possibleConstructorReturn(this, (Resources.__proto__ || Object.getPrototypeOf(Resources)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, props));
 
         _this.state = {
-            "values": {}
-            /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
-        };var types_of_resources = ["patrol_cars", "investigators", "swat"];
-        /*should inherit a default value from the game configuration */
-        var default_value = 0;
-
-        types_of_resources.map(function (resource) {
-            _this.state.values[resource] = default_value;
-        });
+            "user": "Lorenzo",
+            "messages": {
+                "0": { "text": "hello world", "user": "Bekk" },
+                "1": { "text": "nice to meet you", "user": "Rafa" }
+            }
+        };
         return _this;
     }
 
-    _createClass(Resources, [{
+    _createClass(Chat, [{
+        key: "writeMessage",
+        value: function writeMessage(event) {
+            if (event.key == "Enter") {
+                var newMessage = event.target.value;
+                var lastNum = Object.keys(this.state.messages).length;
+                var newState = this.state.messages;
+                newState[lastNum] = { "user": this.state.user, "text": newMessage };
+                console.log(newState);
+                this.setState({ "messages": newState });
+            }
+        }
+    }, {
         key: "render",
         value: function render() {
-            var _this2 = this;
+            var chat = [];
+            /*each message will have a "text" key and a "user" key so that I can differentiate */
 
-            /*generating the components as part of a table */
-            var components = [];
-            Object.keys(this.state.values).map(function (resource) {
-                var component = _react2.default.createElement(
-                    "tr",
+            Object.values(this.state.messages).map(function (message) {
+                var chatRow = _react2.default.createElement(
+                    "p",
                     null,
-                    _react2.default.createElement(
-                        "td",
-                        null,
-                        " ",
-                        resource,
-                        " "
-                    ),
-                    _react2.default.createElement(
-                        "td",
-                        null,
-                        " ",
-                        _this2.state.values[resource],
-                        " "
-                    )
+                    "[",
+                    message["user"],
+                    "] ",
+                    message["text"],
+                    " "
                 );
-                components.push(component);
+                chat.push(chatRow);
             });
 
             return _react2.default.createElement(
-                "table",
+                "div",
                 null,
                 _react2.default.createElement(
-                    "thead",
+                    "h3",
                     null,
-                    _react2.default.createElement(
-                        "h3",
-                        null,
-                        "Resources"
-                    )
+                    "Information Feed"
                 ),
                 _react2.default.createElement(
-                    "tbody",
+                    "ul",
                     null,
-                    components
-                )
+                    chat
+                ),
+                _react2.default.createElement("input", { placeholder: "Write comment", onKeyPress: this.writeMessage.bind(this) })
             );
         }
     }]);
 
-    return Resources;
+    return Chat;
 }(_react2.default.Component);
 
-exports.default = Resources;
+exports.default = Chat;

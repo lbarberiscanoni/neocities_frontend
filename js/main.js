@@ -14,6 +14,10 @@ var _Resources = require("./Resources");
 
 var _Resources2 = _interopRequireDefault(_Resources);
 
+var _Chat = require("./Chat");
+
+var _Chat2 = _interopRequireDefault(_Chat);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -43,7 +47,12 @@ var MainView = function (_React$Component) {
         value: function render() {
             switch (this.state.location) {
                 case "home":
-                    return _react2.default.createElement(_Resources2.default, null);
+                    return _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(_Resources2.default, null),
+                        _react2.default.createElement(_Chat2.default, null)
+                    );
                     break;
             }
         }

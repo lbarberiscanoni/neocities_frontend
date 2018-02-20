@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Resources from "./Resources";
+import Chat from "./Chat";
 
 /*this is the main view, through which all other views and components are renderd */
 class MainView extends React.Component {
@@ -17,7 +18,10 @@ class MainView extends React.Component {
         switch(this.state.location) {
             case "home":
                 return(
-                    <Resources />
+                    <div>
+                        <Resources />
+                        <Chat />
+                    </div>
                 )
                 break;
         }

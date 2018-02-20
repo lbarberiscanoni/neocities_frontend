@@ -22,21 +22,59 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Feed = function (_React$Component) {
-    _inherits(Feed, _React$Component);
+var Chat = function (_React$Component) {
+    _inherits(Chat, _React$Component);
 
-    function Feed(props) {
-        _classCallCheck(this, Feed);
+    function Chat(props) {
+        _classCallCheck(this, Chat);
 
-        return _possibleConstructorReturn(this, (Feed.__proto__ || Object.getPrototypeOf(Feed)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, props));
+
+        _this.state = {};
+        return _this;
     }
 
-    _createClass(Feed, [{
+    _createClass(Chat, [{
         key: "render",
-        value: function render() {}
+        value: function render() {
+            var feed = [];
+            /*each message will have a "text" key and a "user" key so that I can differentiate */
+            var dummyData = {
+                "0": { "text": "hello world", "user": "Bekk" },
+                "1": { "text": "nice to meet you", "user": "Rafa" }
+            };
+
+            Object.values(dummyData).map(function (message) {
+                var feedRow = _react2.default.createElement(
+                    "p",
+                    null,
+                    "[",
+                    message["user"],
+                    "] ",
+                    message["text"],
+                    " "
+                );
+                feed.push(feedRow);
+            });
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "h3",
+                    null,
+                    "Information Feed"
+                ),
+                _react2.default.createElement(
+                    "ul",
+                    null,
+                    feed
+                )
+            );
+        }
     }]);
 
-    return Feed;
+    return Chat;
 }(_react2.default.Component);
 
-exports.default = Feed;
+exports.default = Chat;
