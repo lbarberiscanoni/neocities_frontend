@@ -50,6 +50,7 @@ var Chat = function (_React$Component) {
                 newState[lastNum] = { "user": this.state.user, "text": newMessage };
                 console.log(newState);
                 this.setState({ "messages": newState });
+                document.getElementById("chatInpt").value = "";
             }
         }
     }, {
@@ -84,7 +85,7 @@ var Chat = function (_React$Component) {
                     null,
                     chat
                 ),
-                _react2.default.createElement("input", { placeholder: "@" + this.state.user, onKeyPress: this.writeMessage.bind(this) })
+                _react2.default.createElement("input", { id: "chatInpt", placeholder: "@" + this.state.user, onKeyPress: this.writeMessage.bind(this) })
             );
         }
     }]);

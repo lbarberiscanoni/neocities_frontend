@@ -22,6 +22,7 @@ class Chat extends React.Component {
             newState[lastNum] = { "user": this.state.user, "text": newMessage }
             console.log(newState);
             this.setState({"messages": newState})
+            document.getElementById("chatInpt").value = "";
         }
     }
 
@@ -40,7 +41,7 @@ class Chat extends React.Component {
                 <ul>
                     { chat }
                 </ul>
-                <input placeholder={ "@" + this.state.user } onKeyPress={ this.writeMessage.bind(this) }></input>
+                <input id="chatInpt" placeholder={ "@" + this.state.user } onKeyPress={ this.writeMessage.bind(this) }></input>
             </div>
         )
     }
