@@ -14,6 +14,10 @@ var _reactDom = require("react-dom");
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
+var _Task = require("./Task");
+
+var _Task2 = _interopRequireDefault(_Task);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -22,62 +26,36 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Resources = function (_React$Component) {
-    _inherits(Resources, _React$Component);
+var TaskManager = function (_React$Component) {
+    _inherits(TaskManager, _React$Component);
 
-    function Resources(props) {
-        _classCallCheck(this, Resources);
+    function TaskManager(props) {
+        _classCallCheck(this, TaskManager);
 
-        var _this = _possibleConstructorReturn(this, (Resources.__proto__ || Object.getPrototypeOf(Resources)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (TaskManager.__proto__ || Object.getPrototypeOf(TaskManager)).call(this, props));
 
         _this.state = {
-            "values": {}
-            /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
-        };var types_of_resources = ["patrol_cars", "investigators", "swat"];
-        /*should inherit a default value from the game configuration */
-        var default_value = 3;
-
-        types_of_resources.map(function (resource) {
-            var available_deployed_pair = { "available": default_value, "deployed": 0 };
-            _this.state.values[resource] = available_deployed_pair;
-        });
+            "tasks": {
+                0: { "name": "Fire on Grand Street", "requirements": false, "status": false },
+                1: { "name": "Car Crash on Market", "requirements": false, "status": false },
+                2: { "name": "Kidnapping", "requirements": false, "status": false }
+            }
+        };
         return _this;
     }
 
-    _createClass(Resources, [{
+    _createClass(TaskManager, [{
         key: "render",
         value: function render() {
             var _this2 = this;
 
-            /*generating the components as part of a table */
-            var components = [];
-            Object.keys(this.state.values).map(function (resource) {
-                var component = _react2.default.createElement(
-                    "tr",
-                    null,
-                    _react2.default.createElement(
-                        "td",
-                        null,
-                        " ",
-                        resource,
-                        " "
-                    ),
-                    _react2.default.createElement(
-                        "td",
-                        null,
-                        " ",
-                        _this2.state.values[resource]["available"],
-                        " "
-                    ),
-                    _react2.default.createElement(
-                        "td",
-                        null,
-                        " ",
-                        _this2.state.values[resource]["deployed"],
-                        " "
-                    )
-                );
-                components.push(component);
+            /*generating a table for tasks */
+            var tasks = [];
+            Object.keys(this.state.tasks).map(function (key) {
+                var task = _this2.state.tasks[key];
+                console.log(task);
+                var component = _react2.default.createElement(_Task2.default, { num: key, name: task["name"], requirements: task["requirements"], status: task["status"] });
+                tasks.push(component);
             });
 
             return _react2.default.createElement(
@@ -89,7 +67,7 @@ var Resources = function (_React$Component) {
                     _react2.default.createElement(
                         "h3",
                         null,
-                        "Your Resources"
+                        "Tasks"
                     )
                 ),
                 _react2.default.createElement(
@@ -101,26 +79,26 @@ var Resources = function (_React$Component) {
                         _react2.default.createElement(
                             "td",
                             null,
-                            "Type"
+                            "Name"
                         ),
                         _react2.default.createElement(
                             "td",
                             null,
-                            "Available"
+                            "Responders"
                         ),
                         _react2.default.createElement(
                             "td",
                             null,
-                            "Deployed"
+                            "Status"
                         )
                     ),
-                    components
+                    tasks
                 )
             );
         }
     }]);
 
-    return Resources;
+    return TaskManager;
 }(_react2.default.Component);
 
-exports.default = Resources;
+exports.default = TaskManager;

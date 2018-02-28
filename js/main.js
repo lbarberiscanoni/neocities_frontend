@@ -22,6 +22,14 @@ var _Feed = require("./Feed");
 
 var _Feed2 = _interopRequireDefault(_Feed);
 
+var _Status = require("./Status");
+
+var _Status2 = _interopRequireDefault(_Status);
+
+var _TaskManager = require("./TaskManager");
+
+var _TaskManager2 = _interopRequireDefault(_TaskManager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -56,7 +64,9 @@ var MainView = function (_React$Component) {
                         null,
                         _react2.default.createElement(_Resources2.default, null),
                         _react2.default.createElement(_Chat2.default, null),
-                        _react2.default.createElement(_Feed2.default, null)
+                        _react2.default.createElement(_Feed2.default, null),
+                        _react2.default.createElement(_Status2.default, null),
+                        _react2.default.createElement(_TaskManager2.default, null)
                     );
                     break;
             }

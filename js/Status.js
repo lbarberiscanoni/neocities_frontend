@@ -22,6 +22,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+/*team status */
 var Status = function (_React$Component) {
     _inherits(Status, _React$Component);
 
@@ -30,20 +31,67 @@ var Status = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Status.__proto__ || Object.getPrototypeOf(Status)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+            "values": {}
+            /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
+        };var types_of_resources = ["patrol_cars", "investigators", "swat"];
+        /*should inherit a default value from the game configuration */
+        var default_value = 3;
+
+        types_of_resources.map(function (resource) {
+            var available_deployed_pair = { "available": 0, "deployed": default_value };
+            _this.state.values[resource] = available_deployed_pair;
+        });
         return _this;
     }
 
     _createClass(Status, [{
         key: "render",
         value: function render() {
+            var _this2 = this;
+
+            /*generating the components as part of a table */
+            var components = [];
+            Object.keys(this.state.values).map(function (resource) {
+                var component = _react2.default.createElement(
+                    "tr",
+                    null,
+                    _react2.default.createElement(
+                        "td",
+                        null,
+                        " ",
+                        resource,
+                        " "
+                    ),
+                    _react2.default.createElement(
+                        "td",
+                        null,
+                        " ",
+                        _this2.state.values[resource]["available"],
+                        " / ",
+                        _this2.state.values[resource]["deployed"],
+                        " "
+                    )
+                );
+                components.push(component);
+            });
+
             return _react2.default.createElement(
-                "div",
+                "table",
                 null,
                 _react2.default.createElement(
-                    "h3",
+                    "thead",
                     null,
-                    "Team Status"
+                    _react2.default.createElement(
+                        "h3",
+                        null,
+                        "Team Status"
+                    )
+                ),
+                _react2.default.createElement(
+                    "tbody",
+                    null,
+                    components
                 )
             );
         }
