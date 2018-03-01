@@ -22,34 +22,76 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Units = function (_React$Component) {
-    _inherits(Units, _React$Component);
+var Task = function (_React$Component) {
+    _inherits(Task, _React$Component);
 
-    function Units(props) {
-        _classCallCheck(this, Units);
+    function Task(props) {
+        _classCallCheck(this, Task);
 
-        var _this = _possibleConstructorReturn(this, (Units.__proto__ || Object.getPrototypeOf(Units)).call(this, props));
+        /* it will inherit as a property from the task manager */
+        var _this = _possibleConstructorReturn(this, (Task.__proto__ || Object.getPrototypeOf(Task)).call(this, props));
 
-        _this.state = {};
+        _this.state = {
+            "resources": ["patrol_cars", "investigators", "swat"]
+        };
         return _this;
     }
 
-    _createClass(Units, [{
+    _createClass(Task, [{
         key: "render",
         value: function render() {
+            console.log(this.props);
             return _react2.default.createElement(
-                "div",
+                "tr",
                 null,
                 _react2.default.createElement(
-                    "h3",
+                    "td",
                     null,
-                    "Team Status"
+                    " ",
+                    this.props.name,
+                    " "
+                ),
+                _react2.default.createElement(
+                    "td",
+                    null,
+                    " ",
+                    this.props.requirements,
+                    " "
+                ),
+                _react2.default.createElement(
+                    "td",
+                    null,
+                    _react2.default.createElement(
+                        "select",
+                        null,
+                        _react2.default.createElement(
+                            "option",
+                            { value: "", defaultValue: "selected" },
+                            "Allocate Resource"
+                        ),
+                        this.state.resources.map(function (resource) {
+                            return _react2.default.createElement(
+                                "option",
+                                null,
+                                " ",
+                                resource,
+                                " "
+                            );
+                        })
+                    )
+                ),
+                _react2.default.createElement(
+                    "td",
+                    null,
+                    " ",
+                    this.props.status,
+                    " "
                 )
             );
         }
     }]);
 
-    return Units;
+    return Task;
 }(_react2.default.Component);
 
-exports.default = Units;
+exports.default = Task;
