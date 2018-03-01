@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+const API = require('../apiServiceObject');
 
 class Tasks extends React.Component {
-    
+
     constructor(props) {
         super(props)
         this.state = {
