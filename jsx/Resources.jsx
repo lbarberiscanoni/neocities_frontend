@@ -39,16 +39,7 @@ class Resources extends React.Component {
                     <h3>Your Resources</h3>
                 </thead>
                 <tbody>
-<<<<<<< HEAD
                     { components }
-=======
-                    <tr>
-                        <td>Type</td>
-                        <td>Available</td>
-                        <td>Deployed</td>
-                    </tr>
-                    { components } 
->>>>>>> 0b1436bbd393f6d0c71f834bc9b4e010f7df757c
                 </tbody>
             </table>
         )

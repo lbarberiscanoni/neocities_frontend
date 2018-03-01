@@ -22,6 +22,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var API = require('../apiServiceObject');
+
 var Resources = function (_React$Component) {
     _inherits(Resources, _React$Component);
 
@@ -32,8 +34,13 @@ var Resources = function (_React$Component) {
 
         _this.state = {
             "values": {}
-            /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
-        };var types_of_resources = ["patrol_cars", "investigators", "swat"];
+            // New API Instance
+        };var api = new API("sessionKey", "particpantID");
+        console.log(api);
+        console.log(api.getEvents());
+        console.log(api.getResources());
+        /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
+        var types_of_resources = ["patrol_cars", "investigators", "swat"];
         /*should inherit a default value from the game configuration */
         var default_value = 3;
 
@@ -95,25 +102,6 @@ var Resources = function (_React$Component) {
                 _react2.default.createElement(
                     "tbody",
                     null,
-                    _react2.default.createElement(
-                        "tr",
-                        null,
-                        _react2.default.createElement(
-                            "td",
-                            null,
-                            "Type"
-                        ),
-                        _react2.default.createElement(
-                            "td",
-                            null,
-                            "Available"
-                        ),
-                        _react2.default.createElement(
-                            "td",
-                            null,
-                            "Deployed"
-                        )
-                    ),
                     components
                 )
             );
