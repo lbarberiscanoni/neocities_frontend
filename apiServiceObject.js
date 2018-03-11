@@ -9,8 +9,9 @@ class API{
   constructor(sessionKey, particpantID) {
     // Model
     this.models = {
-      "Resource": function(){console.log("Serialization Option")},
-      "Event": function(){console.log("Serialization Option")}
+        "Resource": function(){console.log("Serialization Option")},
+        "Event": function(){console.log("Serialization Option")},
+        "Action": function(){console.log("Serialization Option")},
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"
@@ -31,12 +32,12 @@ class API{
         return(axios.delete(this.API_URL + model.toLowerCase() + '/' + id + '/').then(res => { return(res.data) }))
       }
       // Create "Create" method
-      this["create" + model] = () => {
-        return(axios.post(this.API_URL + model.toLowerCase() +'s/').then(res => { return(res.data) }))
+      this["create" + model] = (payload) => {
+        return(axios.post(this.API_URL + model.toLowerCase() +'/', payload).then(res => { return(res.data) }))
       }
       // Create Update method
-      this["update" + model] = (id) => {
-        return(axios.post(this.API_URL + model.toLowerCase() +'/' + id + '/').then(res => { return(res.data) }))
+      this["update" + model] = (id, payload) => {
+        return(axios.post(this.API_URL + model.toLowerCase() +'/' + id + '/', payload).then(res => { return(res.data) }))
       }
     }
   }

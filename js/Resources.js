@@ -35,12 +35,8 @@ var Resources = function (_React$Component) {
         _this.state = {
             "values": {}
             // New API Instance
-        };var api = new API("sessionKey", "particpantID");
-        console.log(api);
-        console.log(api.getEvents());
-        console.log(api.getResources());
-        /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
-        var types_of_resources = ["patrol_cars", "investigators", "swat"];
+            /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
+        };var types_of_resources = ["patrol_cars", "investigators", "swat"];
         /*should inherit a default value from the game configuration */
         var default_value = 3;
 

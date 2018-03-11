@@ -38,7 +38,10 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var API = require('../apiServiceObject');
+
 /*this is the main view, through which all other views and components are renderd */
+
 var MainView = function (_React$Component) {
     _inherits(MainView, _React$Component);
 
@@ -48,15 +51,35 @@ var MainView = function (_React$Component) {
         /* we should set the default here */
         var _this = _possibleConstructorReturn(this, (MainView.__proto__ || Object.getPrototypeOf(MainView)).call(this, props));
 
+        var api = new API("sessionKey", "particpantID");
+
         _this.state = {
-            "location": "home"
+            "location": "home",
+            "api": api
         };
         return _this;
     }
 
     _createClass(MainView, [{
+        key: "log",
+        value: function log(sessionID, participantID, quantity, resource) {
+            var timestamp = new Date();
+            console.log(timestamp + "the hell?");
+            var logOb = {
+                "timestamp": timestamp,
+                "action_type": false,
+                "session": sessionID,
+                "participant": participantID,
+                "quantity": quantity,
+                "resource": [resource]
+            };
+            console.log(this.state.api);
+            console.log(this.state.api.createAction(logOb));
+        }
+    }, {
         key: "render",
         value: function render() {
+            this.log(1, 1, 4, 1);
             switch (this.state.location) {
                 case "home":
                     return _react2.default.createElement(
