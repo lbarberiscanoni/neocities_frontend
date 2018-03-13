@@ -55,31 +55,43 @@ var MainView = function (_React$Component) {
 
         _this.state = {
             "location": "home",
-            "api": api
+            "api": api,
+            "sessionID": 0
         };
         return _this;
     }
 
     _createClass(MainView, [{
         key: "log",
-        value: function log(sessionID, participantID, quantity, resource) {
+        value: function log(participantID, quantity, resource) {
+            //logging based on the format of the DB
             var timestamp = new Date();
-            console.log(timestamp + "the hell?");
+
             var logOb = {
                 "timestamp": timestamp,
                 "action_type": false,
-                "session": sessionID,
+                "session": this.state.sessionID,
                 "participant": participantID,
                 "quantity": quantity,
                 "resource": [resource]
             };
-            console.log(this.state.api);
             console.log(this.state.api.createAction(logOb));
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            //getting the sessionID once the component as mounted
+            this.state.api.getSessions().then(function (res) {
+                _this2.setState({
+                    "sessionID": res[0]["id"]
+                });
+            });
         }
     }, {
         key: "render",
         value: function render() {
-            this.log(1, 1, 4, 1);
             switch (this.state.location) {
                 case "home":
                     return _react2.default.createElement(

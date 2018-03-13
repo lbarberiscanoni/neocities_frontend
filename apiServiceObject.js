@@ -12,16 +12,19 @@ class API{
         "Resource": function(){console.log("Serialization Option")},
         "Event": function(){console.log("Serialization Option")},
         "Action": function(){console.log("Serialization Option")},
+        "Session": function(){console.log("Serialization Option")}
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"
     this.res;
     this.header = {'Api-Key': sessionKey, 'particpantID': particpantID};
 
-    for(var model in this.models){
+    Object.keys(this.models).map((model) => {
+      console.log(this.models);
       // Create Get List method
       this["get" + model + "s"] = () => {
-        return(axios.get(this.API_URL + model.toLowerCase() + 's/').then(res => { return(res.data) }))
+        console.log(model);
+        return(axios.get(this.API_URL + model.toLowerCase() + '/').then(res => { return(res.data) }))
       }
       // Create Get method
       this["get" + model] = (id) => {
@@ -39,7 +42,7 @@ class API{
       this["update" + model] = (id, payload) => {
         return(axios.post(this.API_URL + model.toLowerCase() +'/' + id + '/', payload).then(res => { return(res.data) }))
       }
-    }
+    })
   }
 }
 module.exports = API;

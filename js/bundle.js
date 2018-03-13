@@ -13,16 +13,19 @@ class API{
         "Resource": function(){console.log("Serialization Option")},
         "Event": function(){console.log("Serialization Option")},
         "Action": function(){console.log("Serialization Option")},
+        "Session": function(){console.log("Serialization Option")}
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"
     this.res;
     this.header = {'Api-Key': sessionKey, 'particpantID': particpantID};
 
-    for(var model in this.models){
+    Object.keys(this.models).map((model) => {
+      console.log(this.models);
       // Create Get List method
       this["get" + model + "s"] = () => {
-        return(axios.get(this.API_URL + model.toLowerCase() + 's/').then(res => { return(res.data) }))
+        console.log(model);
+        return(axios.get(this.API_URL + model.toLowerCase() + '/').then(res => { return(res.data) }))
       }
       // Create Get method
       this["get" + model] = (id) => {
@@ -40,7 +43,7 @@ class API{
       this["update" + model] = (id, payload) => {
         return(axios.post(this.API_URL + model.toLowerCase() +'/' + id + '/', payload).then(res => { return(res.data) }))
       }
-    }
+    })
   }
 }
 module.exports = API;
@@ -684,31 +687,43 @@ var MainView = function (_React$Component) {
 
         _this.state = {
             "location": "home",
-            "api": api
+            "api": api,
+            "sessionID": 0
         };
         return _this;
     }
 
     _createClass(MainView, [{
         key: "log",
-        value: function log(sessionID, participantID, quantity, resource) {
+        value: function log(participantID, quantity, resource) {
+            //logging based on the format of the DB
             var timestamp = new Date();
-            console.log(timestamp + "the hell?");
+
             var logOb = {
                 "timestamp": timestamp,
                 "action_type": false,
-                "session": sessionID,
+                "session": this.state.sessionID,
                 "participant": participantID,
                 "quantity": quantity,
                 "resource": [resource]
             };
-            console.log(this.state.api);
             console.log(this.state.api.createAction(logOb));
+        }
+    }, {
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            //getting the sessionID once the component as mounted
+            this.state.api.getSessions().then(function (res) {
+                _this2.setState({
+                    "sessionID": res[0]["id"]
+                });
+            });
         }
     }, {
         key: "render",
         value: function render() {
-            this.log(1, 1, 4, 1);
             switch (this.state.location) {
                 case "home":
                     return _react2.default.createElement(
