@@ -53,7 +53,6 @@ var TaskManager = function (_React$Component) {
             var tasks = [];
             Object.keys(this.state.tasks).map(function (key) {
                 var task = _this2.state.tasks[key];
-                console.log(task);
                 var component = _react2.default.createElement(_Task2.default, { num: key, name: task["name"], requirements: task["requirements"], status: task["status"] });
                 tasks.push(component);
             });

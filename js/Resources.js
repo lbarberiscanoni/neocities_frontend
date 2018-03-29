@@ -34,15 +34,15 @@ var Resources = function (_React$Component) {
 
         _this.state = {
             "values": {}
-            // New API Instance
             /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
-        };var types_of_resources = ["patrol_cars", "investigators", "swat"];
+        };var types_of_resources = _this.props.resources;
         /*should inherit a default value from the game configuration */
         var default_value = 3;
 
         types_of_resources.map(function (resource) {
+            console.log(resource);
             var available_deployed_pair = { "available": default_value, "deployed": 0 };
-            _this.state.values[resource] = available_deployed_pair;
+            _this.state.values[resource["name"]] = available_deployed_pair;
         });
         return _this;
     }
@@ -69,14 +69,9 @@ var Resources = function (_React$Component) {
                         "td",
                         null,
                         " ",
-                        _this2.state.values[resource]["available"],
-                        " "
-                    ),
-                    _react2.default.createElement(
-                        "td",
-                        null,
-                        " ",
                         _this2.state.values[resource]["deployed"],
+                        " / ",
+                        _this2.state.values[resource]["available"],
                         " "
                     )
                 );

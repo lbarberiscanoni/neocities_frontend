@@ -30,8 +30,9 @@ var Chat = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, props));
 
+        var userName = _this.props.userName;
         _this.state = {
-            "user": "Lorenzo",
+            "user": userName,
             "messages": {
                 "0": { "text": "hello world", "user": "Bekk" },
                 "1": { "text": "nice to meet you", "user": "Rafa" }

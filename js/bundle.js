@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 const axios = require('axios');
 // We are going to put all of our API calls in one place so we can
 // handle serialization here if needed
@@ -13,7 +13,9 @@ class API{
         "Resource": function(){console.log("Serialization Option")},
         "Event": function(){console.log("Serialization Option")},
         "Action": function(){console.log("Serialization Option")},
-        "Session": function(){console.log("Serialization Option")}
+        "Session": function(){console.log("Serialization Option")},
+        "Scenario": function(){console.log("Serialization Option")},
+        "Participant": function(){console.log("Serialization Option")}
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"
@@ -81,8 +83,9 @@ var Chat = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (Chat.__proto__ || Object.getPrototypeOf(Chat)).call(this, props));
 
+        var userName = _this.props.userName;
         _this.state = {
-            "user": "Lorenzo",
+            "user": userName,
             "messages": {
                 "0": { "text": "hello world", "user": "Bekk" },
                 "1": { "text": "nice to meet you", "user": "Rafa" }
@@ -248,15 +251,15 @@ var Resources = function (_React$Component) {
 
         _this.state = {
             "values": {}
-            // New API Instance
             /*theoretically, the resources could be modified in the configuration, so the internal state should be generated from a list */
-        };var types_of_resources = ["patrol_cars", "investigators", "swat"];
+        };var types_of_resources = _this.props.resources;
         /*should inherit a default value from the game configuration */
         var default_value = 3;
 
         types_of_resources.map(function (resource) {
+            console.log(resource);
             var available_deployed_pair = { "available": default_value, "deployed": 0 };
-            _this.state.values[resource] = available_deployed_pair;
+            _this.state.values[resource["name"]] = available_deployed_pair;
         });
         return _this;
     }
@@ -283,14 +286,9 @@ var Resources = function (_React$Component) {
                         "td",
                         null,
                         " ",
-                        _this2.state.values[resource]["available"],
-                        " "
-                    ),
-                    _react2.default.createElement(
-                        "td",
-                        null,
-                        " ",
                         _this2.state.values[resource]["deployed"],
+                        " / ",
+                        _this2.state.values[resource]["available"],
                         " "
                     )
                 );
@@ -469,7 +467,7 @@ var Task = function (_React$Component) {
     _createClass(Task, [{
         key: "render",
         value: function render() {
-            console.log(this.props);
+            //console.log(this.props);
             return _react2.default.createElement(
                 "tr",
                 null,
@@ -580,7 +578,6 @@ var TaskManager = function (_React$Component) {
             var tasks = [];
             Object.keys(this.state.tasks).map(function (key) {
                 var task = _this2.state.tasks[key];
-                console.log(task);
                 var component = _react2.default.createElement(_Task2.default, { num: key, name: task["name"], requirements: task["requirements"], status: task["status"] });
                 tasks.push(component);
             });
@@ -681,14 +678,11 @@ var MainView = function (_React$Component) {
         _classCallCheck(this, MainView);
 
         /* we should set the default here */
+
         var _this = _possibleConstructorReturn(this, (MainView.__proto__ || Object.getPrototypeOf(MainView)).call(this, props));
 
-        var api = new API("sessionKey", "particpantID");
-
         _this.state = {
-            "location": "home",
-            "api": api,
-            "sessionID": 0
+            "location": "login"
         };
         return _this;
     }
@@ -710,14 +704,29 @@ var MainView = function (_React$Component) {
             console.log(this.state.api.createAction(logOb));
         }
     }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
+        key: "login",
+        value: function login() {
             var _this2 = this;
+
+            //let token = document.getElementById("tokenInpt").value
+            var api = new API("sessionKey", "particpantID");
+            var token = 1;
+            api.getParticipant(token).then(function (participant) {
+                //the state now includes api so that calls can be made through the instance created above
+                _this2.setState({ "location": "home", participant: participant, api: api });
+            });
+        }
+    }, {
+        key: "fuck",
+        value: function fuck() {
+            var _this3 = this;
 
             //getting the sessionID once the component as mounted
             this.state.api.getSessions().then(function (res) {
-                _this2.setState({
-                    "sessionID": res[0]["id"]
+                var sessionID = res[0]["id"];
+
+                _this3.setState({
+                    "sessionID": sessionID
                 });
             });
         }
@@ -725,12 +734,25 @@ var MainView = function (_React$Component) {
         key: "render",
         value: function render() {
             switch (this.state.location) {
-                case "home":
+                case "login":
                     return _react2.default.createElement(
                         "div",
                         null,
-                        _react2.default.createElement(_Resources2.default, null),
-                        _react2.default.createElement(_Chat2.default, null),
+                        _react2.default.createElement("input", { id: "tokenInpt", placeholder: "Enter Session Token" }),
+                        _react2.default.createElement(
+                            "button",
+                            { id: "submit", onClick: this.login.bind(this) },
+                            "Start"
+                        )
+                    );
+                    break;
+                case "home":
+                    console.log(this.state);
+                    return _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(_Resources2.default, { resources: this.state.participant.role.resources }),
+                        _react2.default.createElement(_Chat2.default, { userName: this.state.participant.name }),
                         _react2.default.createElement(_Feed2.default, null),
                         _react2.default.createElement(_Status2.default, null),
                         _react2.default.createElement(_TaskManager2.default, null)

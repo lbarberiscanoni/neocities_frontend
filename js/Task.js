@@ -40,7 +40,7 @@ var Task = function (_React$Component) {
     _createClass(Task, [{
         key: "render",
         value: function render() {
-            console.log(this.props);
+            //console.log(this.props);
             return _react2.default.createElement(
                 "tr",
                 null,

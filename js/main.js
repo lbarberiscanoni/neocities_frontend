@@ -49,14 +49,11 @@ var MainView = function (_React$Component) {
         _classCallCheck(this, MainView);
 
         /* we should set the default here */
+
         var _this = _possibleConstructorReturn(this, (MainView.__proto__ || Object.getPrototypeOf(MainView)).call(this, props));
 
-        var api = new API("sessionKey", "particpantID");
-
         _this.state = {
-            "location": "home",
-            "api": api,
-            "sessionID": 0
+            "location": "login"
         };
         return _this;
     }
@@ -78,14 +75,29 @@ var MainView = function (_React$Component) {
             console.log(this.state.api.createAction(logOb));
         }
     }, {
-        key: "componentDidMount",
-        value: function componentDidMount() {
+        key: "login",
+        value: function login() {
             var _this2 = this;
+
+            //let token = document.getElementById("tokenInpt").value
+            var api = new API("sessionKey", "particpantID");
+            var token = 1;
+            api.getParticipant(token).then(function (participant) {
+                //the state now includes api so that calls can be made through the instance created above
+                _this2.setState({ "location": "home", participant: participant, api: api });
+            });
+        }
+    }, {
+        key: "fuck",
+        value: function fuck() {
+            var _this3 = this;
 
             //getting the sessionID once the component as mounted
             this.state.api.getSessions().then(function (res) {
-                _this2.setState({
-                    "sessionID": res[0]["id"]
+                var sessionID = res[0]["id"];
+
+                _this3.setState({
+                    "sessionID": sessionID
                 });
             });
         }
@@ -93,12 +105,25 @@ var MainView = function (_React$Component) {
         key: "render",
         value: function render() {
             switch (this.state.location) {
-                case "home":
+                case "login":
                     return _react2.default.createElement(
                         "div",
                         null,
-                        _react2.default.createElement(_Resources2.default, null),
-                        _react2.default.createElement(_Chat2.default, null),
+                        _react2.default.createElement("input", { id: "tokenInpt", placeholder: "Enter Session Token" }),
+                        _react2.default.createElement(
+                            "button",
+                            { id: "submit", onClick: this.login.bind(this) },
+                            "Start"
+                        )
+                    );
+                    break;
+                case "home":
+                    console.log(this.state);
+                    return _react2.default.createElement(
+                        "div",
+                        null,
+                        _react2.default.createElement(_Resources2.default, { resources: this.state.participant.role.resources }),
+                        _react2.default.createElement(_Chat2.default, { userName: this.state.participant.name }),
                         _react2.default.createElement(_Feed2.default, null),
                         _react2.default.createElement(_Status2.default, null),
                         _react2.default.createElement(_TaskManager2.default, null)

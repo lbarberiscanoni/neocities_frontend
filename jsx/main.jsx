@@ -15,12 +15,9 @@ class MainView extends React.Component {
     constructor(props) {
         super(props)
         /* we should set the default here */
-        let api = new API("sessionKey", "particpantID");
 
         this.state = {
-            "location": "home",
-            "api": api,
-            "sessionID": 0
+            "location": "login",
         }
     }
 
@@ -39,22 +36,43 @@ class MainView extends React.Component {
         console.log(this.state.api.createAction(logOb));
     }
 
-    componentDidMount() {
+    login() {
+        //let token = document.getElementById("tokenInpt").value
+        let api = new API("sessionKey", "particpantID");
+        let token = 1
+        api.getParticipant(token).then((participant) => {
+            //the state now includes api so that calls can be made through the instance created above
+            this.setState({"location": "home", participant, api})
+        })
+    }
+
+    fuck() {
         //getting the sessionID once the component as mounted
         this.state.api.getSessions().then((res) => {
+            let sessionID = res[0]["id"]
+
             this.setState({
-                "sessionID": res[0]["id"]
+                "sessionID": sessionID,
             })
         })
     }
 
     render() {
         switch(this.state.location) {
-            case "home":
+            case "login":
                 return(
                     <div>
-                        <Resources />
-                        <Chat />
+                        <input id="tokenInpt" placeholder="Enter Session Token" />
+                        <button id="submit" onClick={ this.login.bind(this) }>Start</button>
+                    </div>
+                )
+                break;
+            case "home":
+                console.log(this.state);
+                return(
+                    <div>
+                        <Resources resources={ this.state.participant.role.resources }/>
+                        <Chat userName={ this.state.participant.name } />
                         <Feed />
                         <Status />
                         <TaskManager />

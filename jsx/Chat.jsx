@@ -5,8 +5,9 @@ class Chat extends React.Component {
     
     constructor(props) {
         super(props)
+        let userName = this.props.userName
         this.state = {
-            "user": "Lorenzo",
+            "user": userName,
             "messages": {
                 "0": {"text": "hello world", "user": "Bekk"}, 
                 "1": {"text": "nice to meet you", "user": "Rafa"}
