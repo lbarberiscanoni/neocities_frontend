@@ -5,6 +5,7 @@ import Chat from "./Chat";
 import Feed from "./Feed";
 import Status from "./Status";
 import TaskManager from "./TaskManager";
+import Card from "./Card";
 
 const API = require('../apiServiceObject');
 
@@ -68,14 +69,27 @@ class MainView extends React.Component {
                 )
                 break;
             case "home":
-                console.log(this.state);
                 return(
-                    <div>
-                        <Resources resources={ this.state.participant.role.resources }/>
-                        <Chat userName={ this.state.participant.name } />
-                        <Feed />
-                        <Status />
-                        <TaskManager />
+                    <div className="container">
+                        <div className="row mt-4">
+                            <Card>
+                                <Resources resources={ this.state.participant.role.resources }/>
+                            </Card>
+                            <Card>
+                                <Status />
+                            </Card>
+                            <Card>
+                                <Feed />
+                            </Card>
+                        </div>
+                        <div className="row mt-4">
+                            <Card>
+                                <TaskManager />
+                            </Card>
+                            <Card>
+                                <Chat userName={ this.state.participant.name } />
+                            </Card>
+                        </div>
                     </div>
                 )
                 break;

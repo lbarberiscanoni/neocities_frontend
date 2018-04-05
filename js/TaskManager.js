@@ -59,7 +59,7 @@ var TaskManager = function (_React$Component) {
 
             return _react2.default.createElement(
                 "table",
-                null,
+                { className: "table table-striped" },
                 _react2.default.createElement(
                     "thead",
                     null,

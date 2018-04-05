@@ -30,7 +30,7 @@ class Resources extends React.Component {
         })
 
         return(
-            <table>
+            <table className="table">
                 <thead>
                     <h3>Your Resources</h3>
                 </thead>

@@ -80,7 +80,7 @@ var Resources = function (_React$Component) {
 
             return _react2.default.createElement(
                 "table",
-                null,
+                { className: "table" },
                 _react2.default.createElement(
                     "thead",
                     null,

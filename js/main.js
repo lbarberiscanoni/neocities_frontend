@@ -30,6 +30,10 @@ var _TaskManager = require("./TaskManager");
 
 var _TaskManager2 = _interopRequireDefault(_TaskManager);
 
+var _Card = require("./Card");
+
+var _Card2 = _interopRequireDefault(_Card);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -118,15 +122,42 @@ var MainView = function (_React$Component) {
                     );
                     break;
                 case "home":
-                    console.log(this.state);
                     return _react2.default.createElement(
                         "div",
-                        null,
-                        _react2.default.createElement(_Resources2.default, { resources: this.state.participant.role.resources }),
-                        _react2.default.createElement(_Chat2.default, { userName: this.state.participant.name }),
-                        _react2.default.createElement(_Feed2.default, null),
-                        _react2.default.createElement(_Status2.default, null),
-                        _react2.default.createElement(_TaskManager2.default, null)
+                        { className: "container" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row mt-4" },
+                            _react2.default.createElement(
+                                _Card2.default,
+                                null,
+                                _react2.default.createElement(_Resources2.default, { resources: this.state.participant.role.resources })
+                            ),
+                            _react2.default.createElement(
+                                _Card2.default,
+                                null,
+                                _react2.default.createElement(_Status2.default, null)
+                            ),
+                            _react2.default.createElement(
+                                _Card2.default,
+                                null,
+                                _react2.default.createElement(_Feed2.default, null)
+                            )
+                        ),
+                        _react2.default.createElement(
+                            "div",
+                            { className: "row mt-4" },
+                            _react2.default.createElement(
+                                _Card2.default,
+                                null,
+                                _react2.default.createElement(_TaskManager2.default, null)
+                            ),
+                            _react2.default.createElement(
+                                _Card2.default,
+                                null,
+                                _react2.default.createElement(_Chat2.default, { userName: this.state.participant.name })
+                            )
+                        )
                     );
                     break;
             }

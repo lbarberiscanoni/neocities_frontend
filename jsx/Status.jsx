@@ -29,7 +29,7 @@ class Status extends React.Component {
         })
 
         return(
-            <table>
+            <table className="table">
                 <thead>
                     <h3>Team Status</h3>
                 </thead>

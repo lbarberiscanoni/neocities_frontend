@@ -25,7 +25,7 @@ class TaskManager extends React.Component {
         })
 
         return(
-            <table>
+            <table className="table table-striped">
                 <thead>
                     <h3>Tasks</h3>
                 </thead>
