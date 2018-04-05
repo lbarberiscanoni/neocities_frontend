@@ -6,7 +6,7 @@ const axios = require('axios');
 
 class API{
 
-  constructor(sessionKey, particpantID) {
+  constructor(particpantID) {
     // Model
     this.models = {
         "Resource": function(){console.log("Serialization Option")},
@@ -17,13 +17,16 @@ class API{
 
     this.API_URL = "http://127.0.0.1:8000/api/"
     this.res;
-    this.header = {'Api-Key': sessionKey, 'particpantID': particpantID};
+
+
+    let init = axios.get(this.API_URL + "/participant/token/" + particpantID + "/").then(res => { return(res.data) })
+
+    this.participant = init["participant"]
+    this.header = {'Api-Key': init["sessionToken"], 'particpantID': particpantID};
 
     Object.keys(this.models).map((model) => {
-      console.log(this.models);
       // Create Get List method
       this["get" + model + "s"] = () => {
-        console.log(model);
         return(axios.get(this.API_URL + model.toLowerCase() + '/').then(res => { return(res.data) }))
       }
       // Create Get method
@@ -43,6 +46,15 @@ class API{
         return(axios.post(this.API_URL + model.toLowerCase() +'/' + id + '/', payload).then(res => { return(res.data) }))
       }
     })
+
+  }
+
+  this.sendResource = (resource_id, event_id) => {
+    return(this.["createAction"]({"resouce": resource_id, "event": event_id, "action_type": "SEND_RESOURCE"}))
+  }
+
+  this.recallResource = (resource_id, event_id) => {
+    return(this.["createAction"]({"resouce": resource_id, "event": event_id, "action_type": "RECALL_RESOURCE"}))
   }
 }
 module.exports = API;
