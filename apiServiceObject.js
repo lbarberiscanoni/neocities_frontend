@@ -20,11 +20,6 @@ class API{
       this.participant = initial.data["participant"]
       this.header = {'Api-Key': initial.data["sessionToken"], 'particpantID': particpantID}
       this.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
-
-      this.dynamicData.onmessage = (e) => {
-        console.log(JSON.parse(e.data))
-      }
-
     })
 
 

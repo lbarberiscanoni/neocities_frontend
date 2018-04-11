@@ -12,7 +12,7 @@ const API = require('../apiServiceObject');
 
 /*this is the main view, through which all other views and components are renderd */
 class MainView extends React.Component {
-    
+
     constructor(props) {
         super(props)
         /* we should set the default here */
@@ -39,11 +39,15 @@ class MainView extends React.Component {
 
     login() {
         //let token = document.getElementById("tokenInpt").value
-        let api = new API("sessionKey", "particpantID");
+        let api = new API("particpantID");
         let token = 1
         api.getParticipant(token).then((participant) => {
             //the state now includes api so that calls can be made through the instance created above
             this.setState({"location": "home", participant, api})
+
+            api.dynamicData.onmessage = (e) => {
+              this.setState(JSON.parse(JSON.parse(e.data)['text']))
+            }
         })
     }
 
@@ -59,6 +63,7 @@ class MainView extends React.Component {
     }
 
     render() {
+        { console.log(this.state) }
         switch(this.state.location) {
             case "login":
                 return(

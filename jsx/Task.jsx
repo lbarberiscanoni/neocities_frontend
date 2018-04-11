@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 class Task extends React.Component {
-    
+
     constructor(props) {
         super(props)
         /* it will inherit as a property from the task manager */
@@ -20,12 +20,12 @@ class Task extends React.Component {
                 <td>
                     <div className="dropdown">
                         <option className="dropdown-item" value="" defaultValue="selected">Allocate Resource</option>
-                        { 
-                            this.state.resources.map((resource) => 
+                        {
+                            this.state.resources.map((resource) =>
                                 <option className="dropdown-item"> { resource } </option>
                             )
                         }
-                    </select>
+                    </div>
                 </td>
                 <td> { this.props.status } </td>
             </tr>
