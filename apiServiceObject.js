@@ -2,8 +2,6 @@ const axios = require('axios');
 // We are going to put all of our API calls in one place so we can
 // handle serialization here if needed
 
-
-
 class API{
 
   constructor(particpantID) {
@@ -18,13 +16,18 @@ class API{
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"
-    this.res;
+    axios.get(this.API_URL + "initparticipant/" + particpantID + "/").then(initial => {
+      this.participant = initial.data["participant"]
+      this.header = {'Api-Key': initial.data["sessionToken"], 'particpantID': particpantID}
+      this.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
+
+      this.dynamicData.onmessage = (e) => {
+        console.log(JSON.parse(e.data))
+      }
+
+    })
 
 
-    let init = axios.get(this.API_URL + "/participant/token/" + particpantID + "/").then(res => { return(res.data) })
-
-    this.participant = init["participant"]
-    this.header = {'Api-Key': init["sessionToken"], 'particpantID': particpantID};
 
     Object.keys(this.models).map((model) => {
       // Create Get List method
@@ -51,12 +54,12 @@ class API{
 
   }
 
-  this.sendResource = (resource_id, event_id) => {
-    return(this.["createAction"]({"resouce": resource_id, "event": event_id, "action_type": "SEND_RESOURCE"}))
-  }
-
-  this.recallResource = (resource_id, event_id) => {
-    return(this.["createAction"]({"resouce": resource_id, "event": event_id, "action_type": "RECALL_RESOURCE"}))
-  }
+  // this.sendResource = (resource_id, event_id) => {
+  //   return(this.createAction({"resouce": resource_id, "event": event_id, "action_type": "SEND_RESOURCE"}))
+  // }
+  //
+  // this.recallResource = (resource_id, event_id) => {
+  //   return(this.createAction({"resouce": resource_id, "event": event_id, "action_type": "RECALL_RESOURCE"}))
+  // }
 }
 module.exports = API;
