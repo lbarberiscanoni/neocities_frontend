@@ -12,7 +12,9 @@ class API{
         "Resource": function(){console.log("Serialization Option")},
         "Event": function(){console.log("Serialization Option")},
         "Action": function(){console.log("Serialization Option")},
-        "Session": function(){console.log("Serialization Option")}
+        "Session": function(){console.log("Serialization Option")},
+        "Scenario": function(){console.log("Serialization Option")},
+        "Participant": function(){console.log("Serialization Option")}
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"

@@ -20,13 +20,12 @@ class TaskManager extends React.Component {
         let tasks = []
         Object.keys(this.state.tasks).map((key) => {
             let task = this.state.tasks[key]
-            console.log(task);
             let component = <Task num={ key } name={ task["name"] } requirements={ task["requirements"] } status={ task["status"] } />
             tasks.push(component)
         })
 
         return(
-            <table>
+            <table className="table table-striped">
                 <thead>
                     <h3>Tasks</h3>
                 </thead>

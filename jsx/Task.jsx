@@ -12,17 +12,17 @@ class Task extends React.Component {
     }
 
     render() {
-        console.log(this.props);
+        //console.log(this.props);
         return(
             <tr>
                 <td> { this.props.name } </td>
                 <td> { this.props.requirements } </td>
                 <td>
-                    <select>
-                        <option value="" defaultValue="selected">Allocate Resource</option>
+                    <div className="dropdown">
+                        <option className="dropdown-item" value="" defaultValue="selected">Allocate Resource</option>
                         { 
                             this.state.resources.map((resource) => 
-                                <option> { resource } </option>
+                                <option className="dropdown-item"> { resource } </option>
                             )
                         }
                     </select>
