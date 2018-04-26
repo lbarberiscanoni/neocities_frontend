@@ -21,8 +21,10 @@ class Task extends React.Component {
                     <div className="dropdown">
                         <option className="dropdown-item" value="" defaultValue="selected">Allocate Resource</option>
                         {
+                            let i = 0
                             this.state.resources.map((resource) =>
-                                <option className="dropdown-item"> { resource } </option>
+                                <option key={ i } className="dropdown-item"> { resource } </option>
+                                i += 1
                             )
                         }
                     </div>

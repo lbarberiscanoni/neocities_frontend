@@ -62,17 +62,17 @@ var Task = function (_React$Component) {
                     "td",
                     null,
                     _react2.default.createElement(
-                        "select",
-                        null,
+                        "div",
+                        { className: "dropdown" },
                         _react2.default.createElement(
                             "option",
-                            { value: "", defaultValue: "selected" },
+                            { className: "dropdown-item", value: "", defaultValue: "selected" },
                             "Allocate Resource"
                         ),
                         this.state.resources.map(function (resource) {
                             return _react2.default.createElement(
                                 "option",
-                                null,
+                                { className: "dropdown-item" },
                                 " ",
                                 resource,
                                 " "

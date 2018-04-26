@@ -36,14 +36,16 @@ var Feed = function (_React$Component) {
         value: function render() {
             var dummyData = ["announcement 1", "announcement 2", "announcement 3"];
             var components = [];
+            var i = 0;
             dummyData.map(function (announcement) {
                 components.push(_react2.default.createElement(
                     "section",
-                    null,
+                    { key: i },
                     " ",
                     announcement,
                     " "
                 ));
+                i += 1;
             });
 
             return _react2.default.createElement(

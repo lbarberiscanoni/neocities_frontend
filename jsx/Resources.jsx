@@ -15,7 +15,7 @@ class Resources extends React.Component {
         let default_value = 3
 
         types_of_resources.map((resource) => {
-            console.log(resource);
+            //console.log(resource);
             let available_deployed_pair = {"available": default_value, "deployed": 0}
             this.state.values[resource["name"]] = available_deployed_pair
         })
@@ -24,9 +24,11 @@ class Resources extends React.Component {
     render() {
         /*generating the components as part of a table */
         let components = []
+        let i = 0
         Object.keys(this.state.values).map((resource) => {
-            let component = <tr><td> { resource } </td><td> { this.state.values[resource]["deployed"] } / { this.state.values[resource]["available"] } </td></tr>
+            let component = <tr key={ i} ><td> { resource } </td><td> { this.state.values[resource]["deployed"] } / { this.state.values[resource]["available"] } </td></tr>
             components.push(component)
+            i += 1
         })
 
         return(

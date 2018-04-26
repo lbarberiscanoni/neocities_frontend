@@ -20,8 +20,8 @@ class API{
       this.participant = initial.data["participant"]
       this.header = {'Api-Key': initial.data["sessionToken"], 'particpantID': particpantID}
       this.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
-      this.resource_event_states = initial["ResourceEventStates"]
-      console.log(initial)
+      this.resource_event_states = initial.data["ResourceEventStates"]
+      //console.log(initial)
     });
 
     Object.keys(this.models).map((model) => {

@@ -34,7 +34,7 @@ class MainView extends React.Component {
             "quantity": quantity,
             "resource": [resource],
         }
-        console.log(this.state.api.createAction(logOb));
+        //console.log(this.state.api.createAction(logOb));
     }
 
     login() {
@@ -47,6 +47,7 @@ class MainView extends React.Component {
 
             api.dynamicData.onmessage = (e) => {
               this.setState(JSON.parse(JSON.parse(e.data)['text']))
+                console.log(e.data["text"])
             }
         })
     }
@@ -63,7 +64,6 @@ class MainView extends React.Component {
     }
 
     render() {
-        { console.log(this.state) }
         switch(this.state.location) {
             case "login":
                 return(
@@ -74,6 +74,7 @@ class MainView extends React.Component {
                 )
                 break;
             case "home":
+                console.log(this.state);
                 return(
                     <div className="container">
                         <div className="row mt-4">

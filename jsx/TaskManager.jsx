@@ -18,10 +18,12 @@ class TaskManager extends React.Component {
     render() {
         /*generating a table for tasks */
         let tasks = []
+        let i = 0
         Object.keys(this.state.tasks).map((key) => {
             let task = this.state.tasks[key]
-            let component = <Task num={ key } name={ task["name"] } requirements={ task["requirements"] } status={ task["status"] } />
+            let component = <Task key={ i } num={ key } name={ task["name"] } requirements={ task["requirements"] } status={ task["status"] } />
             tasks.push(component)
+            i += 1
         })
 
         return(

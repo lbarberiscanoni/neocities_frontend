@@ -23,9 +23,11 @@ class Status extends React.Component {
     render() {
         /*generating the components as part of a table */
         let components = []
+        let i = 0
         Object.keys(this.state.values).map((resource) => {
-            let component = <tr><td> { resource } </td><td> { this.state.values[resource]["available"] } / { this.state.values[resource]["deployed"] } </td></tr>
+            let component = <tr key={ i }><td> { resource } </td><td> { this.state.values[resource]["available"] } / { this.state.values[resource]["deployed"] } </td></tr>
             components.push(component)
+            i += 1
         })
 
         return(

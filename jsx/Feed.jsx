@@ -10,8 +10,10 @@ class Feed extends React.Component {
     render() {
         let dummyData = ["announcement 1", "announcement 2", "announcement 3"]
         let components = []
+        let i = 0
         dummyData.map((announcement) => {
-            components.push(<section> { announcement } </section>)
+            components.push(<section key={ i }> { announcement } </section>)
+            i += 1
         })
 
         return(

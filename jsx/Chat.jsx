@@ -31,9 +31,11 @@ class Chat extends React.Component {
         let chat = []
         /*each message will have a "text" key and a "user" key so that I can differentiate */
 
+        let i = 0
         Object.values(this.state.messages).map((message) => {
-            let chatRow = <p>[{ message["user"] }] { message["text"] } </p>
+            let chatRow = <p key={ i }>[{ message["user"] }] { message["text"] } </p>
             chat.push(chatRow)
+            i += 1
         })
 
         return(

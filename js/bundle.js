@@ -3,11 +3,9 @@ const axios = require('axios');
 // We are going to put all of our API calls in one place so we can
 // handle serialization here if needed
 
-
-
 class API{
 
-  constructor(sessionKey, particpantID) {
+  constructor(particpantID) {
     // Model
     this.models = {
         "Resource": function(){console.log("Serialization Option")},
@@ -19,14 +17,17 @@ class API{
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"
-    this.res;
-    this.header = {'Api-Key': sessionKey, 'particpantID': particpantID};
+    axios.get(this.API_URL + "initparticipant/" + particpantID + "/").then(initial => {
+      this.participant = initial.data["participant"]
+      this.header = {'Api-Key': initial.data["sessionToken"], 'particpantID': particpantID}
+      this.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
+      this.resource_event_states = initial.data["ResourceEventStates"]
+      //console.log(initial)
+    });
 
     Object.keys(this.models).map((model) => {
-      console.log(this.models);
       // Create Get List method
       this["get" + model + "s"] = () => {
-        console.log(model);
         return(axios.get(this.API_URL + model.toLowerCase() + '/').then(res => { return(res.data) }))
       }
       // Create Get method
@@ -45,9 +46,10 @@ class API{
       this["update" + model] = (id, payload) => {
         return(axios.post(this.API_URL + model.toLowerCase() +'/' + id + '/', payload).then(res => { return(res.data) }))
       }
-    })
-  }
+    });
+  };
 }
+
 module.exports = API;
 
 },{"axios":10}],2:[function(require,module,exports){
@@ -92,7 +94,7 @@ var Card = function (_React$Component) {
     _createClass(Card, [{
         key: "render",
         value: function render() {
-            console.log(this.props.children);
+            //console.log(this.props.children)
             return _react2.default.createElement(
                 "div",
                 { className: "col" },
@@ -176,10 +178,11 @@ var Chat = function (_React$Component) {
             var chat = [];
             /*each message will have a "text" key and a "user" key so that I can differentiate */
 
+            var i = 0;
             Object.values(this.state.messages).map(function (message) {
                 var chatRow = _react2.default.createElement(
                     "p",
-                    null,
+                    { key: i },
                     "[",
                     message["user"],
                     "] ",
@@ -187,6 +190,7 @@ var Chat = function (_React$Component) {
                     " "
                 );
                 chat.push(chatRow);
+                i += 1;
             });
 
             return _react2.default.createElement(
@@ -250,14 +254,16 @@ var Feed = function (_React$Component) {
         value: function render() {
             var dummyData = ["announcement 1", "announcement 2", "announcement 3"];
             var components = [];
+            var i = 0;
             dummyData.map(function (announcement) {
                 components.push(_react2.default.createElement(
                     "section",
-                    null,
+                    { key: i },
                     " ",
                     announcement,
                     " "
                 ));
+                i += 1;
             });
 
             return _react2.default.createElement(
@@ -320,7 +326,7 @@ var Resources = function (_React$Component) {
         var default_value = 3;
 
         types_of_resources.map(function (resource) {
-            console.log(resource);
+            //console.log(resource);
             var available_deployed_pair = { "available": default_value, "deployed": 0 };
             _this.state.values[resource["name"]] = available_deployed_pair;
         });
@@ -334,10 +340,11 @@ var Resources = function (_React$Component) {
 
             /*generating the components as part of a table */
             var components = [];
+            var i = 0;
             Object.keys(this.state.values).map(function (resource) {
                 var component = _react2.default.createElement(
                     "tr",
-                    null,
+                    { key: i },
                     _react2.default.createElement(
                         "td",
                         null,
@@ -356,6 +363,7 @@ var Resources = function (_React$Component) {
                     )
                 );
                 components.push(component);
+                i += 1;
             });
 
             return _react2.default.createElement(
@@ -438,10 +446,11 @@ var Status = function (_React$Component) {
 
             /*generating the components as part of a table */
             var components = [];
+            var i = 0;
             Object.keys(this.state.values).map(function (resource) {
                 var component = _react2.default.createElement(
                     "tr",
-                    null,
+                    { key: i },
                     _react2.default.createElement(
                         "td",
                         null,
@@ -460,6 +469,7 @@ var Status = function (_React$Component) {
                     )
                 );
                 components.push(component);
+                i += 1;
             });
 
             return _react2.default.createElement(
@@ -552,17 +562,17 @@ var Task = function (_React$Component) {
                     "td",
                     null,
                     _react2.default.createElement(
-                        "select",
-                        null,
+                        "div",
+                        { className: "dropdown" },
                         _react2.default.createElement(
                             "option",
-                            { value: "", defaultValue: "selected" },
+                            { className: "dropdown-item", value: "", defaultValue: "selected" },
                             "Allocate Resource"
                         ),
                         this.state.resources.map(function (resource) {
                             return _react2.default.createElement(
                                 "option",
-                                null,
+                                { className: "dropdown-item" },
                                 " ",
                                 resource,
                                 " "
@@ -639,10 +649,12 @@ var TaskManager = function (_React$Component) {
 
             /*generating a table for tasks */
             var tasks = [];
+            var i = 0;
             Object.keys(this.state.tasks).map(function (key) {
                 var task = _this2.state.tasks[key];
-                var component = _react2.default.createElement(_Task2.default, { num: key, name: task["name"], requirements: task["requirements"], status: task["status"] });
+                var component = _react2.default.createElement(_Task2.default, { key: i, num: key, name: task["name"], requirements: task["requirements"], status: task["status"] });
                 tasks.push(component);
+                i += 1;
             });
 
             return _react2.default.createElement(
@@ -767,8 +779,8 @@ var MainView = function (_React$Component) {
                 "participant": participantID,
                 "quantity": quantity,
                 "resource": [resource]
+                //console.log(this.state.api.createAction(logOb));
             };
-            console.log(this.state.api.createAction(logOb));
         }
     }, {
         key: "login",
@@ -776,11 +788,16 @@ var MainView = function (_React$Component) {
             var _this2 = this;
 
             //let token = document.getElementById("tokenInpt").value
-            var api = new API("sessionKey", "particpantID");
+            var api = new API("particpantID");
             var token = 1;
             api.getParticipant(token).then(function (participant) {
                 //the state now includes api so that calls can be made through the instance created above
                 _this2.setState({ "location": "home", participant: participant, api: api });
+
+                api.dynamicData.onmessage = function (e) {
+                    _this2.setState(JSON.parse(JSON.parse(e.data)['text']));
+                    console.log(e.data["text"]);
+                };
             });
         }
     }, {
@@ -814,6 +831,7 @@ var MainView = function (_React$Component) {
                     );
                     break;
                 case "home":
+                    console.log(this.state);
                     return _react2.default.createElement(
                         "div",
                         { className: "container" },
