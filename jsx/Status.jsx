@@ -11,7 +11,7 @@ class Status extends React.Component {
 
         this.props.data.participant.session.scenario_ran.roles.map((role) =>{
           if(role["id"] != this.props.data.participant.role["id"]){
-            role.resources.map((resource) =>{
+            role.resourcedepot_set.map((resource) =>{
                 this.teamMateResources.push(resource)
             });
           }
@@ -24,7 +24,7 @@ class Status extends React.Component {
                 <thead>
                     <h3>Team Status</h3>
                 </thead>
-                  <Resources data = { {resources: this.teamMateResources,  resource_event_states: this.props.data.resource_event_states} }/>
+                  <Resources data = { {resourcedepot_set: this.teamMateResources,  resource_event_states: this.props.data.resource_event_states} }/>
             </table>
         )
     }

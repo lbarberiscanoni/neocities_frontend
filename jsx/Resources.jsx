@@ -11,15 +11,14 @@ class Resources extends React.Component {
 
     cleanResources(){
       let resource_com = []
-      this.props.data.resources.map((resource) => {
+      this.props.data.resourcedepot_set.map((resource_depot) => {
         let deployed = 0;
         this.props.data.resource_event_states.map((resource_event_state) =>{
-          console.log("Resource ", resource_event_state["resource"], resource["id"])
-          if(resource_event_state["resource"] == resource["id"]){
+          if(resource_event_state.resource.id == resource_depot.resource.id){
             deployed += parseInt(resource_event_state["deployed"])
           }
         });
-        let resource_data = {"name": resource["name"], "deployed": deployed, "available": 3 }
+        let resource_data = {"name": resource_depot.resource.name, "deployed": deployed, "available": resource_depot.quantity }
         resource_com.push(resource_data)
       });
       return(resource_com)
@@ -31,7 +30,6 @@ class Resources extends React.Component {
         this.cleanResources().map((resource_data) => {
             let component = <tr><td> { resource_data["name"] } </td><td> { resource_data["deployed"] } / { resource_data["available"] } </td></tr>
             components.push(component)
-            i += 1
         })
 
         return(

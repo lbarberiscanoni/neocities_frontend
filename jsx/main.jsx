@@ -28,13 +28,13 @@ class MainView extends React.Component {
 
         let logOb = {
             "timestamp": timestamp,
-            "action_type": false,
+            "action_type": "DEPLOY",
             "session": this.state.sessionID,
-            "participant": participantID,
+            "participant": this.props.api.participant,
             "quantity": quantity,
-            "resource": [resource],
+            "resource": resource,
         }
-        //console.log(this.state.api.createAction(logOb));
+        // console.log(this.state.api.createAction(logOb));
     }
 
     login() {
@@ -45,6 +45,7 @@ class MainView extends React.Component {
             api.header = {'Api-Key': initial.data["sessionToken"], 'participantID': participantID}
             api.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
             //the state now includes api so that calls can be made through the instance created above
+            api.session = initial.data.sessionID
             api.getParticipant(api.participant).then((participant) =>{
               this.setState({"location": "home", "participant": participant,
                 "api": api, "resource_event_states": initial.data["ResourceEventStates"],
@@ -53,6 +54,7 @@ class MainView extends React.Component {
 
             api.dynamicData.onmessage = (e) => {
               console.log(JSON.parse(JSON.parse(e.data)['text']))
+              this.setState({"resource_event_states": JSON.parse(JSON.parse(e.data)['text'])['resource_event_state']})
             }
         })
     }
@@ -68,11 +70,7 @@ class MainView extends React.Component {
                 )
                 break;
             case "home":
-<<<<<<< HEAD
                 { console.log(this.state) }
-=======
-                console.log(this.state);
->>>>>>> 9b9780d761db412cbdb0b019d2e99e8b6c684458
                 return(
                     <div className="container">
                         <div className="row mt-4">

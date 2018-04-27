@@ -6,12 +6,14 @@ class TaskManager extends React.Component {
 
     constructor(props) {
         super(props)
-        this.availableResources = this.props.data.participant.role.resources
+        console.log(this.props.data)
+        this.availableResources = this.props.data.participant.role.resourcedepot_set
         this.cleanedEvents = []
         this.props.data.events.map((event) => {
           let event_data = {event: event, state: []}
           this.props.data.resource_event_states.map((state) => {
-            if(event["id"] == state["event"]){
+            console.log("event stuff: ", event.id, state.event.id)
+            if(event.id == state.event.id){
               // Check if the event is completed
               event_data["state"].push(state)
             }
@@ -24,9 +26,8 @@ class TaskManager extends React.Component {
         /*generating a table for tasks */
         let tasks = []
         this.cleanedEvents.map((cleanedEvent) => {
-            let component = <Task cleanedEvent = { cleanedEvent } resources = { this.availableResources } />
+            let component = <Task cleanedEvent = { cleanedEvent } resourcedepot_set = { this.availableResources } api = {this.props.data.api}/>
             tasks.push(component)
-            i += 1
         })
 
         return(
