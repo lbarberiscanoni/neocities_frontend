@@ -39,7 +39,7 @@ var Card = function (_React$Component) {
     _createClass(Card, [{
         key: "render",
         value: function render() {
-            console.log(this.props.children);
+            //console.log(this.props.children)
             return _react2.default.createElement(
                 "div",
                 { className: "col" },

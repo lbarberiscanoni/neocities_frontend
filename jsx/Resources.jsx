@@ -31,6 +31,7 @@ class Resources extends React.Component {
         this.cleanResources().map((resource_data) => {
             let component = <tr><td> { resource_data["name"] } </td><td> { resource_data["deployed"] } / { resource_data["available"] } </td></tr>
             components.push(component)
+            i += 1
         })
 
         return(

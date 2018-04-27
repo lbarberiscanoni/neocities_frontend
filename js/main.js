@@ -75,8 +75,8 @@ var MainView = function (_React$Component) {
                 "participant": participantID,
                 "quantity": quantity,
                 "resource": [resource]
+                //console.log(this.state.api.createAction(logOb));
             };
-            console.log(this.state.api.createAction(logOb));
         }
     }, {
         key: "login",
@@ -84,11 +84,16 @@ var MainView = function (_React$Component) {
             var _this2 = this;
 
             //let token = document.getElementById("tokenInpt").value
-            var api = new API("sessionKey", "particpantID");
+            var api = new API("particpantID");
             var token = 1;
             api.getParticipant(token).then(function (participant) {
                 //the state now includes api so that calls can be made through the instance created above
                 _this2.setState({ "location": "home", participant: participant, api: api });
+
+                api.dynamicData.onmessage = function (e) {
+                    _this2.setState(JSON.parse(JSON.parse(e.data)['text']));
+                    console.log(e.data["text"]);
+                };
             });
         }
     }, {
@@ -122,6 +127,7 @@ var MainView = function (_React$Component) {
                     );
                     break;
                 case "home":
+                    console.log(this.state);
                     return _react2.default.createElement(
                         "div",
                         { className: "container" },

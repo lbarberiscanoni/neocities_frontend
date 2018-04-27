@@ -52,10 +52,11 @@ var Status = function (_React$Component) {
 
             /*generating the components as part of a table */
             var components = [];
+            var i = 0;
             Object.keys(this.state.values).map(function (resource) {
                 var component = _react2.default.createElement(
                     "tr",
-                    null,
+                    { key: i },
                     _react2.default.createElement(
                         "td",
                         null,
@@ -74,6 +75,7 @@ var Status = function (_React$Component) {
                     )
                 );
                 components.push(component);
+                i += 1;
             });
 
             return _react2.default.createElement(

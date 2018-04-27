@@ -60,10 +60,11 @@ var Chat = function (_React$Component) {
             var chat = [];
             /*each message will have a "text" key and a "user" key so that I can differentiate */
 
+            var i = 0;
             Object.values(this.state.messages).map(function (message) {
                 var chatRow = _react2.default.createElement(
                     "p",
-                    null,
+                    { key: i },
                     "[",
                     message["user"],
                     "] ",
@@ -71,6 +72,7 @@ var Chat = function (_React$Component) {
                     " "
                 );
                 chat.push(chatRow);
+                i += 1;
             });
 
             return _react2.default.createElement(

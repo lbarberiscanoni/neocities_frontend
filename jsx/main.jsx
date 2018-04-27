@@ -34,7 +34,7 @@ class MainView extends React.Component {
             "quantity": quantity,
             "resource": [resource],
         }
-        console.log(this.state.api.createAction(logOb));
+        //console.log(this.state.api.createAction(logOb));
     }
 
     login() {
@@ -68,7 +68,11 @@ class MainView extends React.Component {
                 )
                 break;
             case "home":
+<<<<<<< HEAD
                 { console.log(this.state) }
+=======
+                console.log(this.state);
+>>>>>>> 9b9780d761db412cbdb0b019d2e99e8b6c684458
                 return(
                     <div className="container">
                         <div className="row mt-4">

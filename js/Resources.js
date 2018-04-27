@@ -40,7 +40,7 @@ var Resources = function (_React$Component) {
         var default_value = 3;
 
         types_of_resources.map(function (resource) {
-            console.log(resource);
+            //console.log(resource);
             var available_deployed_pair = { "available": default_value, "deployed": 0 };
             _this.state.values[resource["name"]] = available_deployed_pair;
         });
@@ -54,10 +54,11 @@ var Resources = function (_React$Component) {
 
             /*generating the components as part of a table */
             var components = [];
+            var i = 0;
             Object.keys(this.state.values).map(function (resource) {
                 var component = _react2.default.createElement(
                     "tr",
-                    null,
+                    { key: i },
                     _react2.default.createElement(
                         "td",
                         null,
@@ -76,6 +77,7 @@ var Resources = function (_React$Component) {
                     )
                 );
                 components.push(component);
+                i += 1;
             });
 
             return _react2.default.createElement(

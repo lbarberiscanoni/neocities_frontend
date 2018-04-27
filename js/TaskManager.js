@@ -51,10 +51,12 @@ var TaskManager = function (_React$Component) {
 
             /*generating a table for tasks */
             var tasks = [];
+            var i = 0;
             Object.keys(this.state.tasks).map(function (key) {
                 var task = _this2.state.tasks[key];
-                var component = _react2.default.createElement(_Task2.default, { num: key, name: task["name"], requirements: task["requirements"], status: task["status"] });
+                var component = _react2.default.createElement(_Task2.default, { key: i, num: key, name: task["name"], requirements: task["requirements"], status: task["status"] });
                 tasks.push(component);
+                i += 1;
             });
 
             return _react2.default.createElement(
