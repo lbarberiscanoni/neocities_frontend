@@ -16,13 +16,7 @@ class API{
     }
 
     this.API_URL = "http://127.0.0.1:8000/api/"
-    axios.get(this.API_URL + "initparticipant/" + particpantID + "/").then(initial => {
-      this.participant = initial.data["participant"]
-      this.header = {'Api-Key': initial.data["sessionToken"], 'particpantID': particpantID}
-      this.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
-      this.resource_event_states = initial.data["ResourceEventStates"]
-      console.log(initial)
-    });
+    this.login = axios.get(this.API_URL + "initparticipant/" + particpantID + "/");
 
     Object.keys(this.models).map((model) => {
       // Create Get List method

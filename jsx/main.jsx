@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Resources from "./Resources";
+import PersonalResources from "./PersonalResources";
 import Chat from "./Chat";
 import Feed from "./Feed";
 import Status from "./Status";
@@ -38,61 +38,56 @@ class MainView extends React.Component {
     }
 
     login() {
-        //let token = document.getElementById("tokenInpt").value
-        let api = new API("particpantID");
-        let token = 1
-        api.getParticipant(token).then((participant) => {
+        let participantID = document.getElementById("tokenInpt").value
+        let api = new API(participantID);
+        api.login.then((initial) => {
+            api.participant = initial.data["participant"]
+            api.header = {'Api-Key': initial.data["sessionToken"], 'participantID': participantID}
+            api.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
             //the state now includes api so that calls can be made through the instance created above
-            this.setState({"location": "home", participant, api})
+            api.getParticipant(api.participant).then((participant) =>{
+              this.setState({"location": "home", "participant": participant,
+                "api": api, "resource_event_states": initial.data["ResourceEventStates"],
+                "events": initial.data["Events"], "briefing": initial.data["Briefing"]})
+            });
 
             api.dynamicData.onmessage = (e) => {
-              this.setState(JSON.parse(JSON.parse(e.data)['text']))
+              console.log(JSON.parse(JSON.parse(e.data)['text']))
             }
         })
     }
 
-    fuck() {
-        //getting the sessionID once the component as mounted
-        this.state.api.getSessions().then((res) => {
-            let sessionID = res[0]["id"]
-
-            this.setState({
-                "sessionID": sessionID,
-            })
-        })
-    }
-
     render() {
-        { console.log(this.state) }
         switch(this.state.location) {
             case "login":
                 return(
                     <div>
-                        <input id="tokenInpt" placeholder="Enter Session Token" />
+                        <input id="tokenInpt" placeholder="Enter Participant Token" />
                         <button id="submit" onClick={ this.login.bind(this) }>Start</button>
                     </div>
                 )
                 break;
             case "home":
+                { console.log(this.state) }
                 return(
                     <div className="container">
                         <div className="row mt-4">
                             <Card>
-                                <Resources resources={ this.state.participant.role.resources }/>
+                                <PersonalResources data = { this.state }/>
                             </Card>
                             <Card>
-                                <Status />
+                                <Status data = { this.state }/>
                             </Card>
                             <Card>
-                                <Feed />
+                                <Feed data = { this.state.briefing }/>
                             </Card>
                         </div>
                         <div className="row mt-4">
                             <Card>
-                                <TaskManager />
+                                <TaskManager data = { this.state } />
                             </Card>
                             <Card>
-                                <Chat userName={ this.state.participant.name } />
+                                <Chat userName = { this.state.participant.name } />
                             </Card>
                         </div>
                     </div>

@@ -3,24 +3,28 @@ import ReactDOM from "react-dom";
 import Task from "./Task";
 
 class TaskManager extends React.Component {
-    
+
     constructor(props) {
         super(props)
-        this.state = {
-            "tasks": {
-                0: { "name": "Fire on Grand Street", "requirements": false, "status": false },
-                1: { "name": "Car Crash on Market", "requirements": false, "status": false },
-                2: { "name": "Kidnapping", "requirements": false, "status": false },
+        this.availableResources = this.props.data.participant.role.resources
+        this.cleanedEvents = []
+        this.props.data.events.map((event) => {
+          let event_data = {event: event, state: []}
+          this.props.data.resource_event_states.map((state) => {
+            if(event["id"] == state["event"]){
+              // Check if the event is completed
+              event_data["state"].push(state)
             }
-        }
+          });
+          this.cleanedEvents.push(event_data)
+        });
     }
 
     render() {
         /*generating a table for tasks */
         let tasks = []
-        Object.keys(this.state.tasks).map((key) => {
-            let task = this.state.tasks[key]
-            let component = <Task num={ key } name={ task["name"] } requirements={ task["requirements"] } status={ task["status"] } />
+        this.cleanedEvents.map((cleanedEvent) => {
+            let component = <Task cleanedEvent = { cleanedEvent } resources = { this.availableResources } />
             tasks.push(component)
         })
 
@@ -35,7 +39,7 @@ class TaskManager extends React.Component {
                         <td>Responders</td>
                         <td>Status</td>
                     </tr>
-                    { tasks } 
+                    { tasks }
                 </tbody>
             </table>
 
