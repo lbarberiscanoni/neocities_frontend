@@ -10,7 +10,7 @@ import Card from "./Card";
 const API = require('../apiServiceObject');
 
 
-/*this is the main view, through which all other views and components are renderd */
+/* This is the main view, through which all other views and components are renderd */
 class MainView extends React.Component {
 
     constructor(props) {
@@ -41,6 +41,7 @@ class MainView extends React.Component {
         let participantID = document.getElementById("tokenInpt").value
         let api = new API(participantID);
         api.login.then((initial) => {
+            console.log(initial)
             api.participant = initial.data["participant"]
             api.header = {'Api-Key': initial.data["sessionToken"], 'participantID': participantID}
             api.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
@@ -63,9 +64,16 @@ class MainView extends React.Component {
         switch(this.state.location) {
             case "login":
                 return(
-                    <div>
-                        <input id="tokenInpt" placeholder="Enter Participant Token" />
-                        <button id="submit" onClick={ this.login.bind(this) }>Start</button>
+                    <div className="container">
+                        <div className="row mt-4">
+                          <div className="col-4">
+                            Text here
+                          </div>
+                          <div className="col-4">
+                            <input id="tokenInpt" className="form-control" placeholder="Enter Participant Token" />
+                            <button id="submit" className="form-control" onClick={ this.login.bind(this) }>Start</button>
+                          </div>
+                         </div>
                     </div>
                 )
                 break;
@@ -73,6 +81,9 @@ class MainView extends React.Component {
                 { console.log(this.state) }
                 return(
                     <div className="container">
+                        <div className="row mt-4">
+                          <div className="col-4">{ this.state.participant.session.sessionKey }</div>
+                        </div>
                         <div className="row mt-4">
                             <Card>
                                 <PersonalResources data = { this.state }/>

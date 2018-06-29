@@ -26,6 +26,7 @@ class TaskManager extends React.Component {
         /*generating a table for tasks */
         let tasks = []
         this.cleanedEvents.map((cleanedEvent) => {
+            console.log("Cleaned Event" + cleanedEvent)
             let component = <Task cleanedEvent = { cleanedEvent } resourcedepot_set = { this.availableResources } api = {this.props.data.api}/>
             tasks.push(component)
         })
