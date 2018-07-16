@@ -22,7 +22,11 @@ class Status extends React.Component {
         return(
             <table className="table">
                 <thead>
-                    <h3>Team Status</h3>
+                  <tr>
+                    <th>
+                      <h3>Team Status</h3>
+                    </th>
+                  </tr>
                 </thead>
                   <Resources data = { {resourcedepot_set: this.teamMateResources,  resource_event_states: this.props.data.resource_event_states} }/>
             </table>

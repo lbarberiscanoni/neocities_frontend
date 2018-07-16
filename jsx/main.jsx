@@ -29,33 +29,35 @@ class MainView extends React.Component {
         let logOb = {
             "timestamp": timestamp,
             "action_type": "DEPLOY",
-            "session": this.state.sessionID,
+            "session": this.state.api.sessionID,
             "participant": this.props.api.participant,
             "quantity": quantity,
             "resource": resource,
         }
-        // console.log(this.state.api.createAction(logOb));
     }
 
     login() {
         let participantID = document.getElementById("tokenInpt").value
         let api = new API(participantID);
         api.login.then((initial) => {
-            console.log(initial)
             api.participant = initial.data["participant"]
             api.header = {'Api-Key': initial.data["sessionToken"], 'participantID': participantID}
-            api.dynamicData = new WebSocket('ws://' + "127.0.0.1:8000" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
-            //the state now includes api so that calls can be made through the instance created above
+            api.dynamicData = new WebSocket('wss://' + "neocities.herokuapp.com" + '/ws/api/dynamic_data/' + initial.data["sessionToken"] + '/')
+            // The state now includes api so that calls can be made through the instance created above
             api.session = initial.data.sessionID
-            api.getParticipant(api.participant).then((participant) =>{
+            api.getParticipant(api.participant).then((participant) => {
               this.setState({"location": "home", "participant": participant,
                 "api": api, "resource_event_states": initial.data["ResourceEventStates"],
-                "events": initial.data["Events"], "briefing": initial.data["Briefing"]})
+                "events": initial.data["Events"], "briefing": initial.data["Briefing"], "chat_session": initial.data.ChatSession})
             });
 
             api.dynamicData.onmessage = (e) => {
-              console.log(JSON.parse(JSON.parse(e.data)['text']))
-              this.setState({"resource_event_states": JSON.parse(JSON.parse(e.data)['text'])['resource_event_state']})
+              let parsedData = JSON.parse(JSON.parse(e.data)['text'])
+              if(parsedData["ChatSession"]){
+                this.setState({"chat_session": parsedData['ChatSession']})
+              }else{
+                this.setState({"resource_event_states": parsedData['resource_event_state']})
+              }
             }
         })
     }
@@ -78,7 +80,6 @@ class MainView extends React.Component {
                 )
                 break;
             case "home":
-                { console.log(this.state) }
                 return(
                     <div className="container">
                         <div className="row mt-4">
@@ -100,7 +101,7 @@ class MainView extends React.Component {
                                 <TaskManager data = { this.state } />
                             </Card>
                             <Card>
-                                <Chat userName = { this.state.participant.name } />
+                                <Chat api = { this.state.api } chatSession = { this.state.chat_session } user = { this.state.participant } />
                             </Card>
                         </div>
                     </div>

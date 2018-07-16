@@ -6,7 +6,6 @@ class Resources extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log(this.props)
     }
 
     cleanResources(){
@@ -18,7 +17,7 @@ class Resources extends React.Component {
             deployed += parseInt(resource_event_state["deployed"])
           }
         });
-        let resource_data = {"name": resource_depot.resource.name, "deployed": deployed, "available": resource_depot.quantity }
+        let resource_data = {"role": resource_depot.role.name, "name": resource_depot.resource.name, "deployed": deployed, "available": resource_depot.quantity }
         resource_com.push(resource_data)
       });
       return(resource_com)
@@ -28,7 +27,7 @@ class Resources extends React.Component {
         /*generating the components as part of a table */
         let components = []
         this.cleanResources().map((resource_data) => {
-            let component = <tr><td> { resource_data["name"] } </td><td> { resource_data["deployed"] } / { resource_data["available"] } </td></tr>
+            let component = <tr key = { resource_data.name } ><td> { resource_data["role"] } </td><td> { resource_data["name"] } </td><td> { resource_data["deployed"] } / { resource_data["available"] } </td></tr>
             components.push(component)
         })
 

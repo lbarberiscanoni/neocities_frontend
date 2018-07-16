@@ -14,7 +14,11 @@ class PersonalResources extends React.Component {
         return(
             <table className="table">
                 <thead>
-                    <h3>Your Resources</h3>
+                  <tr>
+                    <th>
+                      <h3>Your Resources</h3>
+                    </th>
+                  </tr>
                 </thead>
                   <Resources data = { {resourcedepot_set: this.props.data.participant.role.resourcedepot_set,  resource_event_states: this.props.data.resource_event_states} }/>
             </table>

@@ -12,10 +12,11 @@ class API{
         "Action": function(){console.log("Serialization Option")},
         "Session": function(){console.log("Serialization Option")},
         "Scenario": function(){console.log("Serialization Option")},
-        "Participant": function(){console.log("Serialization Option")}
+        "Participant": function(){console.log("Serialization Option")},
+        "Message": function(){console.log("Serialization Option")}
     }
 
-    this.API_URL = "http://127.0.0.1:8000/api/"
+    this.API_URL = "https://neocities.herokuapp.com/api/"
     this.login = axios.get(this.API_URL + "initparticipant/" + particpantID + "/");
 
     Object.keys(this.models).map((model) => {

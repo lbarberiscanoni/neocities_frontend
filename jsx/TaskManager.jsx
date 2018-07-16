@@ -8,33 +8,38 @@ class TaskManager extends React.Component {
         super(props)
         console.log(this.props.data)
         this.availableResources = this.props.data.participant.role.resourcedepot_set
+    }
+
+    render() {
         this.cleanedEvents = []
         this.props.data.events.map((event) => {
           let event_data = {event: event, state: []}
           this.props.data.resource_event_states.map((state) => {
-            console.log("event stuff: ", event.id, state.event.id)
+            console.log("event stuff: ", event.id, state)
             if(event.id == state.event.id){
               // Check if the event is completed
               event_data["state"].push(state)
             }
           });
+          console.log(event_data)
           this.cleanedEvents.push(event_data)
         });
-    }
-
-    render() {
         /*generating a table for tasks */
         let tasks = []
         this.cleanedEvents.map((cleanedEvent) => {
             console.log("Cleaned Event" + cleanedEvent)
-            let component = <Task cleanedEvent = { cleanedEvent } resourcedepot_set = { this.availableResources } api = {this.props.data.api}/>
+            let component = <Task key= { cleanedEvent.event.description } cleanedEvent = { cleanedEvent } resourcedepot_set = { this.availableResources } api = {this.props.data.api}/>
             tasks.push(component)
         })
 
         return(
             <table className="table table-striped">
                 <thead>
-                    <h3>Tasks</h3>
+                  <tr>
+                    <td>
+                      <h3>Tasks</h3>
+                    </td>
+                  </tr>
                 </thead>
                 <tbody>
                     <tr>
