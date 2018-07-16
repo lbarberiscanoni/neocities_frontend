@@ -60,7 +60,7 @@ class Task extends React.Component {
                 deployOptions.push(<option key = { i } className="dropdown-item" value={i}> {i} </option>)
               }
 
-              for (let i = 0; i <= state["available"]; i++){
+              for (let i = 0; i <= state["deployed"]; i++){
                 recallOptions.push(<option key = { i } className="dropdown-item" value={i}> {i} </option>)
               }
 
