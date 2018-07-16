@@ -6,13 +6,11 @@ class Card extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-        }
     }
 
     render() {
         return(
-            <div className="col">
+            <div className="col box">
                 <div className="card h-100">
                     <div className="card-body">
                         { this.props.children }

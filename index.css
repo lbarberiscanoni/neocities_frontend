@@ -1,4 +1,4 @@
-.chatBox{
-  height: 400px;
+.box{
   overflow-y: scroll;
+  height: 400px;
 }
